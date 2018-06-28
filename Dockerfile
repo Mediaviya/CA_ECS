@@ -9,6 +9,7 @@ LABEL Vendor="CentOS" \
 #    yum -y --setopt=tsflags=nodocs install httpd && \
 #    yum clean all
 RUN yum install -y net-tools
+RUN yum install -y vixie-cron
 #EXPOSE 80
 
 #Install AWS CLI
