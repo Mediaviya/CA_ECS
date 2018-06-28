@@ -1,0 +1,19 @@
+{
+  "name": "SnmpCollector",
+  "displayName": "Extension for pulling metrics from CA SystemEDGE and other SNMP Agents",
+  "version": "10.7.0.45",
+  "facets": [],
+  "dependencies": [],
+  "enhances": [],
+  "excludes": [],
+  "compatibility": {
+    "osName": [
+      "windows",
+      "unix"
+    ],
+    "agentVersion": ">=10.5"
+  },
+  "specificationVersion": "2",
+  "type": "java",
+  "dynamic": true
+}

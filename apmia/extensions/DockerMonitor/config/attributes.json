@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "Name": "name",
+    "ID": "id",
+    "NodeName": "node",
+    "Gateway": "gateway",
+    "Image": "image",
+    "IPAddress": "ipaddress",
+    "NetworkMode": "networkmode",
+    "State": "state"
+  },
+  "attributes": {
+    "labels": {
+      "host": {
+        "com.docker.ucp.license_key": "license"
+      },
+      "node": {
+        "kernelversion": "kernel",
+        "operatingsystem": "operatingsystem"
+      },
+      "container": {
+        "com.docker.compose.service": "service",
+        "com.docker.compose.project": "application",
+        "com.docker.ucp.InstanceID": "system",
+        "com.docker.swarm.service.name": "swarmservice"
+      }
+    },
+    "environments": [
+      "MARATHON_APP_DOCKER_IMAGE",
+      "MARATHON_APP_ID",
+      "MARATHON_APP_RESOURCE_CPUS",
+      "MARATHON_APP_RESOURCE_DISK",
+      "MARATHON_APP_RESOURCE_GPUS",
+      "MARATHON_APP_RESOURCE_MEM",
+      "MARATHON_APP_VERSION",
+      "MESOS_CONTAINER_NAME",
+      "MESOS_TASK_ID"
+    ]
+  }
+}

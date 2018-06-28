@@ -1,0 +1,205 @@
+########################################################################
+# Introscope ProbeBuilder Directives File                              
+# 
+# Version: @@@INTROSCOPE_RELEASE_PLACE_HOLDER@@@
+# Build: @@@INTROSCOPE_BUILD_NUMBER_PLACE_HOLDER@@@
+#                                                                      
+# @@@INTROSCOPE_FULL_RELEASE_NAME_PLACE_HOLDER@@@
+# @@@INTROSCOPE_COPYRIGHT_STRING_PLACE_HOLDER@@@
+# @@@INTROSCOPE_REGISTERED_TRADEMARK_STRING_PLACE_HOLDER@@@
+########################################################################
+
+#########################################################
+# This file provides directives which implement support 
+# for various common NodeJs constructs.  It is intended to 
+# be used with the Introscope default files.            
+#########################################################
+
+
+#######################
+#
+# Http Frontend Tracing
+# ================
+
+SetFlag: NodeHttpFrontendTracing
+IdentifyClassAs: http NodeHttpFrontendTracing
+
+TraceAllMethodsIfFlagged: NodeHttpFrontendTracing NodeHttpFrontendTracer "Frontends|Apps"
+TraceAllMethodsIfFlagged: NodeHttpFrontendTracing NodeExceptionErrorReporter "Frontends|Apps:Errors Per Interval"
+
+SetTracerClassMapping: NodeHttpFrontendTracer com.wily.introscope.agent.trace.hc2.HttpServletTracerWithAgentRoute com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeHttpFrontendTracer generatebusinesstransactionmetrics true
+SetTracerParameter: NodeHttpFrontendTracer newmode true
+SetTracerParameter: NodeHttpFrontendTracer useblame true
+SetTracerParameter: NodeHttpFrontendTracer usecomputedblame true
+SetTracerParameter: NodeHttpFrontendTracer probe nodejs
+SetTracerOrdering: NodeHttpFrontendTracer -1000
+
+SetTracerClassMapping: NodeFrontendMarker com.wily.introscope.agent.trace.hc2.FrontendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeFrontendMarker reentrancy none
+SetTracerParameter: NodeFrontendMarker useblame true
+SetTracerParameter: NodeFrontendMarker newmode true
+SetTracerParameter: NodeFrontendMarker probe nodejs
+
+SetTracerClassMapping: NodeExceptionErrorReporter com.wily.introscope.agent.trace.hc2.MethodThrewErrorReportingTracer com.wily.introscope.probebuilder.validate.MetricNameValidator
+SetTracerParameter: NodeExceptionErrorReporter reentrancy instance
+SetTracerParameter: NodeExceptionErrorReporter useblame false
+SetTracerParameter: NodeExceptionErrorReporter ownmetric false
+SetTracerParameter: NodeExceptionErrorReporter probe nodejs
+
+#######################
+#
+# Http Backend Tracing
+# ================
+
+SetFlag: NodeHttpBackendTracing
+
+IdentifyClassAs: httpclient NodeHttpBackendTracing
+
+TraceAllMethodsIfFlagged: NodeHttpBackendTracing NodeHttpClientBackendTracer "Backends|WebService at {protocol}_//{host}_{port}"
+TraceAllMethodsIfFlagged: NodeHttpBackendTracing NodeHttpClientDetailTracer "Backends|WebService at {protocol}_//{host}_{port}|Paths|{path}"
+TraceAllMethodsWithParametersIfFlagged: NodeHttpBackendTracing NodeHttpClientErrorTracer "Backends|WebService at {protocol}_//{host}_{port}|Paths|{path}:Errors Per Interval"
+
+SetTracerClassMapping: NodeHttpClientBackendTracer com.wily.introscope.agent.trace.backend.http.tracer.HttpClientProbeBackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeHttpClientBackendTracer nameformatter com.wily.introscope.agent.trace.backend.http.nameformatter.HttpURLConnectionNameFormatter
+SetTracerParameter: NodeHttpClientBackendTracer probe nodejs
+SetTracerOrdering: NodeHttpClientBackendTracer 100
+
+SetTracerClassMapping: NodeHttpClientDetailTracer com.wily.introscope.agent.trace.backend.http.tracer.HttpURLConnectionBlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeHttpClientDetailTracer nameformatter com.wily.introscope.agent.trace.backend.http.nameformatter.HttpURLConnectionNameFormatter
+SetTracerParameter: NodeHttpClientDetailTracer probe nodejs
+SetTracerOrdering: NodeHttpClientDetailTracer 200
+
+SetTracerClassMapping: NodeHttpClientErrorTracer com.wily.introscope.agent.trace.backend.http.tracer.HttpClientMethodThrewErrorReportingTracer com.wily.introscope.probebuilder.validate.MetricNameValidator
+SetTracerParameter: NodeHttpClientErrorTracer nameformatter com.wily.introscope.agent.trace.backend.http.nameformatter.HttpURLConnectionNameFormatter
+SetTracerParameter: NodeHttpClientErrorTracer probe nodejs
+SetTracerOrdering: NodeHttpClientErrorTracer 201
+
+#######################
+#
+# File Backend Tracing
+# ================
+
+SetFlag: NodeFileBackendTracing
+IdentifyClassAs: fs NodeFileBackendTracing
+
+TraceAllMethodsIfFlagged: NodeFileBackendTracing NodeBackendMarker  "Backends|{classname}|{method}"
+
+SetTracerClassMapping: NodeBackendMarker com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeBackendMarker reentrancy none
+SetTracerParameter: NodeBackendMarker useblame true
+SetTracerParameter: NodeBackendMarker newmode true
+SetTracerParameter: NodeBackendMarker probe nodejs
+
+#######################
+#
+# Fragment Tracing
+# ================
+
+SetFlag: FragmentTracing
+IdentifyClassAs: fragment FragmentTracing
+
+TraceAllMethodsIfFlagged: FragmentTracing NodeBlamePointTracer "Fragments|{classname}|{method}"
+
+SetTracerClassMapping: NodeBlamePointTracer com.wily.introscope.agent.trace.hc2.BlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeBlamePointTracer reentrancy none
+SetTracerParameter: NodeBlamePointTracer useblame true
+SetTracerParameter: NodeBlamePointTracer newmode true
+SetTracerParameter: NodeBlamePointTracer probe nodejs
+
+#######################
+#
+# MySQL Tracing
+# ================
+
+SetFlag: NodeSqlTracing
+IdentifyClassAs: mysql NodeSqlTracing
+
+TraceOneMethodIfFlagged: NodeSqlTracing query NodeStatementBackendTracer "Backends|{database}" 
+TraceOneMethodIfFlagged: NodeSqlTracing query NodeDbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceAllMethodsIfFlagged: NodeSqlTracing NodeExceptionErrorReporter "Backends|{database}:Errors Per Interval"
+
+SetTracerClassMapping: NodeStatementBackendTracer com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeStatementBackendTracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: NodeStatementBackendTracer reentrancy instance
+SetTracerParameter: NodeStatementBackendTracer forcestandardmetrics false
+SetTracerParameter: NodeStatementBackendTracer newmode true
+SetTracerParameter: NodeStatementBackendTracer useblame true
+SetTracerParameter: NodeStatementBackendTracer agentcomponent "SQL Agent"
+SetTracerParameter: NodeStatementBackendTracer probe nodejs
+
+SetTracerClassMapping: NodeDbCommandTracer com.wily.introscope.agent.sqlagent.hc2.SQLStatementBlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeDbCommandTracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: NodeDbCommandTracer reentrancy instance
+SetTracerParameter: NodeDbCommandTracer dostalls false
+SetTracerParameter: NodeDbCommandTracer newmode true
+SetTracerParameter: NodeDbCommandTracer useblame true
+SetTracerParameter: NodeDbCommandTracer agentcomponent "SQL Agent"
+SetTracerParameter: NodeDbCommandTracer probe nodejs
+
+#######################
+#
+# Loopback Tracing
+# ================
+
+SetFlag: LoopbackDAOTracing
+IdentifyClassAs: loopbackDAO LoopbackDAOTracing
+
+TraceAllMethodsIfFlagged: LoopbackDAOTracing NodeExceptionErrorReporter "na"
+
+#######################
+#
+# Express Tracing
+# ================
+
+SetFlag: ExpressTracing
+IdentifyClassAs: route ExpressTracing
+
+TraceOneMethodIfFlagged: ExpressTracing dispatch NodeExpressMarker "Express|{route}|{http_method}" 
+
+SetTracerClassMapping: NodeExpressMarker com.wily.introscope.agent.trace.nodejs.tracer.NodejsExpressRouteTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeExpressMarker nameformatter com.wily.introscope.agent.trace.nodejs.nameformatter.NodejsExpressRouteNameFormatter
+SetTracerParameter: NodeExpressMarker reentrancy none
+SetTracerParameter: NodeExpressMarker useblame true
+SetTracerParameter: NodeExpressMarker newmode true
+SetTracerParameter: NodeExpressMarker probe nodejs
+
+########################
+#
+# Transaction Trace Parameters Decorating Tracers
+# ================
+
+# SetTracerClassMapping: TTParamsDecoratorTracer com.wily.introscope.agent.collector.trace.TransactionTraceParamsDecoratorTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+# comma separated list of keys available in parameter map of start or finish trace event
+# SetTracerParameter: TTParamsDecoratorTracer paramKeys <parameter-keys>
+# e.g: SetTracerParameter: TTParamsDecoratorTracer paramKeys "module,useragent"
+# SetTracerParameter: TTParamsDecoratorTracer probe nodejs
+# TraceAllMethodsIfFlagged: <tracer-group> TTParamsDecoratorTracer "na"
+
+
+# SetTracerClassMapping: ParamsDecoratorBlamePointTracer com.wily.introscope.agent.collector.trace.ParamsDecoratorBlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+# comma separated list of keys available in parameter map of start or finish trace event
+# SetTracerParameter: ParamsDecoratorBlamePointTracer paramKeys <parameter-keys>
+# e.g.: SetTracerParameter: ParamsDecoratorBlamePointTracer paramKeys "module,useragent,url"
+# SetTracerParameter: ParamsDecoratorBlamePointTracer nameformatter com.wily.introscope.agent.collector.trace.ReplaceParamsNameFormatter
+# resource metric may contain place holders which matches the keys available in parameter map of start trace event
+# SetTracerParameter: ParamsDecoratorBlamePointTracer probe nodejs
+# TraceAllMethodsIfFlagged: <tracer-group> ParamsDecoratorBlamePointTracer "<resource-name>|{param-key1}|{param-key2}"
+# e.g.: TraceAllMethodsIfFlagged: NodeHttpFrontendTracing ParamsDecoratorBlamePointTracer "modules|{module}|URLs|{url}"
+
+########################
+#
+# Node Class Deep Tracing
+# ================
+
+# Do not turn off this tracer group. It is required for transaction tracing to work properly.
+SetFlag: NodeClassDeepTracing
+IdentifyAllClassesAs: NodeClassDeepTracing
+
+TraceAllMethodsIfFlagged: NodeClassDeepTracing NodeTTOnlyTracer "na"
+ 
+SetTracerClassMapping: NodeTTOnlyTracer DeepTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeTTOnlyTracer probe nodejs
+
+# Deep tracer must be first in order to work.
+SetTracerOrdering: NodeTTOnlyTracer -10000

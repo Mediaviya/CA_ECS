@@ -1,0 +1,15 @@
+{
+    "specificationVersion" : "2",
+    "type" : "java",
+    "name": "CA APM For F5 LTM",
+    "displayName": "F5 LTM Monitor",
+    "author" : "CA Technologies",
+    "version": "10.6",
+    "agentVersion": "10.5",
+    "facets" : ["custom", "fieldpack" ],
+    "dependencies" : [],
+    "enhances" : [],
+    "compatibility": {"osName": ["windows","unix"],
+                       "agentVersion" : ">=10.5" },
+    "dynamic": "true"
+}

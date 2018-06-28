@@ -1,0 +1,33 @@
+########################################################################
+# Introscope ProbeBuilder Directives File                              
+# 
+# Version: @@@INTROSCOPE_RELEASE_PLACE_HOLDER@@@
+# Build: @@@INTROSCOPE_BUILD_NUMBER_PLACE_HOLDER@@@
+#                                                                      
+# @@@INTROSCOPE_FULL_RELEASE_NAME_PLACE_HOLDER@@@
+# @@@INTROSCOPE_COPYRIGHT_STRING_PLACE_HOLDER@@@
+# @@@INTROSCOPE_REGISTERED_TRADEMARK_STRING_PLACE_HOLDER@@@
+########################################################################
+
+#############################################################
+#
+# This php-toggles-typical.pbd file provides TurnOn toggle switches
+#   to determine honoring of other directives
+#   in subsequent *.pbd files
+#
+# Comment or uncomment the "TurnOn" directives 
+#   to alter the set of PHP components that are traced.      
+#
+# php-toggles-typical.pbd
+#   by default, comments out (turns off) many flags
+#   for Production use.
+#
+#############################################################
+
+
+TurnOn: PhpScriptFrontendTracing
+#TurnOn: PhpClassDeepTracing
+#TurnOn: PhpScriptDeepTracing
+TurnOn: PhpSqlTracing
+
+#TurnOn: SamplePhpTracing
