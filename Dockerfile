@@ -8,7 +8,7 @@ LABEL Vendor="CentOS" \
 #RUN yum -y --setopt=tsflags=nodocs update && \
 #    yum -y --setopt=tsflags=nodocs install httpd && \
 #    yum clean all
-
+RUN yum install -y net-tools
 #EXPOSE 80
 
 #Install AWS CLI
