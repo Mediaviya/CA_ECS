@@ -18,6 +18,7 @@ LABEL Vendor="CentOS" \
 
 #Copy Web App
 ADD apmia/ /opt/apmia
+RUN chmod -r 755 /opt/apmia
 
 #Install
 RUN /opt/apmia/apmia-ca-installer.sh install
