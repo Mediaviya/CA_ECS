@@ -17,7 +17,7 @@ RUN yum install -y net-tools
 #RUN /root/.local/bin/pip install awscli --upgrade --user
 
 #Copy Web App
-ADD apmia/ /opt/apmia
+ADD apmia2/ /opt/apmia
 RUN chmod -R 755 /opt/apmia
 
 #Install
