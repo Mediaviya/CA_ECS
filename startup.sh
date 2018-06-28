@@ -1,2 +1,2 @@
 #!/bin/sh
-/opt/apmia/apmia-ca-installer.sh start
+/opt/apmia/apmia-ca-installer.sh start && exec "$@";
