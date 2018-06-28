@@ -17,7 +17,7 @@ LABEL Vendor="CentOS" \
 #RUN /root/.local/bin/pip install awscli --upgrade --user
 
 #Copy Web App
-ADD apmia/ /opt/
+ADD apmia/ /opt/apmia
 
 #Install
 RUN /opt/apmia/apmia-ca-installer.sh install
