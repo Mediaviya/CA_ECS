@@ -10,6 +10,7 @@ LABEL Vendor="CentOS" \
 #    yum clean all
 RUN yum install -y net-tools
 RUN yum install -y cronie
+RUN yum install -y iputils
 #EXPOSE 80
 
 #Install AWS CLI
