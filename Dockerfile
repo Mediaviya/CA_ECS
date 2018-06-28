@@ -19,6 +19,9 @@ LABEL Vendor="CentOS" \
 #Copy Web App
 ADD apmia/ /opt/
 
+#Install
+RUN /opt/apmia/apmia-ca-installer.sh install
+
 # Simple startup script to avoid some issues observed with container restart
 #ADD run-httpd.sh /usr/local/bin/
 ADD startup.sh /usr/local/bin/
