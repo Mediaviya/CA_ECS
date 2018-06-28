@@ -15,4 +15,4 @@
 # has been added to the deploy directory,it will automatically
 # be added to the property.
 # Eg: introscope.agent.extensions.bundles.load=f5ltmExtension,HostMonitor,NodeExtension,Webserver-monitor,PhpExtension
-introscope.agent.extensions.bundles.load=
+introscope.agent.extensions.bundles.load=HostMonitor
