@@ -1,0 +1,15 @@
+{
+  "specificationVersion": "2",
+  "name": "DockerMonitor",
+  "displayName": "CA APM Agentless Docker Monitor Agent",
+  "version": "1.0",
+  "type": "java",
+  "dependencies": [],
+  "compatibility": {
+    "osName": [
+      "windows",
+      "unix"
+    ],
+    "agentVersion": ">=10.5.1"
+  }
+}

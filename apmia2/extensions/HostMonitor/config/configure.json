@@ -1,0 +1,100 @@
+{
+  "id": "HOST",
+  "version": "10.6.2",
+  "metricSpecifiers": {
+    "HOST": [
+        {
+        "metricSpecifier": {
+          "format": "SystemEdge|<hostname>|CPU",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "CPU",
+        "metricNames": [
+          "TotalUserPercent",
+          "TotalSystemPercent",
+          "TotalIdlePercent",
+          "TotalUtilPercent"
+        ],
+        "filter": {
+
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "SystemEdge|<hostname>|Memory",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Memory",
+        "metricNames": [
+          "MemInUsePercent",
+          "SwapInUsePercent"
+        ],
+        "filter": {
+
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "SystemEdge|<hostname>|Network|TCP",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Network",
+        "metricNames": [
+          "EstablishedConnections",
+          "AttemptFailures",
+          "ResetConnections"
+        ],
+        "filter": {
+
+        }
+      },      
+      {
+        "metricSpecifier": {
+          "format": "SystemEdge|<hostname>|Storage|<storage>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Storage",
+        "metricNames": [
+          "Size(Blocks)",
+          "Used(Blocks)",
+		  "BlockSize(Bytes)"
+        ],
+        "filter": {
+
+        }
+      }      
+    ]
+  },
+  "alertMappings": {
+    "HOST": [
+      "SystemEdge|<hostname>"
+    ]
+  },
+  "perspectives": [
+    {
+      "id": "HOST_PERSPECTIVE1",
+      "name": "Host Overview",
+      "groupBy": [
+        {
+          "attributeName": "hostname"
+        }
+      ]
+    }
+  ]
+}

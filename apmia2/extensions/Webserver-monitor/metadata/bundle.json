@@ -1,0 +1,15 @@
+{
+    "specificationVersion" : "2",
+    "type" : "java",
+    "name": "CA APM For Webservers",
+    "displayName": "Webserver Monitor",
+    "author" : "CA Technologies",
+    "version": "10.7",
+    "agentVersion": "10.7",
+    "facets" : ["custom", "fieldpack" ],
+    "dependencies" : [],
+    "enhances" : [],
+    "compatibility": {"osName": ["windows","unix"],
+                       "agentVersion" : ">=10.7" },
+    "dynamic": "true"
+}

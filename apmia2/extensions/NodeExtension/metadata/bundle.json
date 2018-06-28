@@ -1,0 +1,8 @@
+{
+	"displayName": "NodeJs Extension",
+	"dependencies": ["apmia"],
+	"dynamic": false,
+	"compatibility": {
+		"agentVersion":"${agent.version.truncated}"
+	}
+}

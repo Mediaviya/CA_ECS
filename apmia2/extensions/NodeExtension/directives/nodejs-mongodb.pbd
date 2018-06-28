@@ -1,0 +1,126 @@
+########################################################################
+# Introscope ProbeBuilder Directives File                              
+# 
+# Version: @@@INTROSCOPE_RELEASE_PLACE_HOLDER@@@
+# Build: @@@INTROSCOPE_BUILD_NUMBER_PLACE_HOLDER@@@
+#                                                                      
+# @@@INTROSCOPE_FULL_RELEASE_NAME_PLACE_HOLDER@@@
+# @@@INTROSCOPE_COPYRIGHT_STRING_PLACE_HOLDER@@@
+# @@@INTROSCOPE_REGISTERED_TRADEMARK_STRING_PLACE_HOLDER@@@
+########################################################################
+
+SetFlag: NodeMongoDBTracing
+
+#######################
+# 
+# MongoDB Driver Version 2.1.x Tracing
+# ================
+
+SetFlag: NodeMongoDBDriver21
+TurnOn: NodeMongoDBDriver21
+
+SetFlag: NodeMongoDB21Tracing
+
+IdentifyTwoFlagIntersectionAsAggregateFlag: NodeMongoDBTracing NodeMongoDBDriver21 NodeMongoDB21Tracing
+
+IdentifyClassAs: mongodb NodeMongoDB21Tracing
+IdentifyClassAs: mongodbCollection NodeMongoDB21Tracing
+IdentifyClassAs: mongodbCursor NodeMongoDB21Tracing
+
+TraceAllMethodsIfFlagged: NodeMongoDB21Tracing NodeMongoDB21BackendTracer "Backends|{dbName} (MongoDB)"
+TraceAllMethodsIfFlagged: NodeMongoDB21Tracing NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB):Errors Per Interval"
+
+# write operations
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing insert NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing insertMany NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing insertOne NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing update NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing updateMany NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing updateOne NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing remove NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing deleteMany NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing deleteOne NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Write Operations|{method}"
+
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing insert NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing insertMany NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing insertOne NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing update NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing updateMany NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing updateOne NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing remove NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing deleteMany NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing deleteOne NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Write Operations|{method}:Errors Per Interval"
+
+# read operations
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing find NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Read Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing toArray NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Read Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing forEach NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Read Operations|{method}"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing next NodeMongoDB21Tracer "Backends|{dbName} (MongoDB)|Read Operations|{method}"
+
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing find NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Read Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing toArray NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Read Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing forEach NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Read Operations|{method}:Errors Per Interval"
+TraceOneMethodIfFlagged: NodeMongoDB21Tracing next NodeMongoDB21ErrorReporter "Backends|{dbName} (MongoDB)|Read Operations|{method}:Errors Per Interval"
+
+SetTracerClassMapping: NodeMongoDB21BackendTracer com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeMongoDB21BackendTracer nameformatter com.wily.introscope.agent.collector.trace.ReplaceParamsNameFormatter
+SetTracerParameter: NodeMongoDB21BackendTracer reentrancy instance
+SetTracerParameter: NodeMongoDB21BackendTracer forcestandardmetrics false
+SetTracerParameter: NodeMongoDB21BackendTracer newmode true
+SetTracerParameter: NodeMongoDB21BackendTracer useblame true
+SetTracerParameter: NodeMongoDB21BackendTracer agentcomponent "SQL Agent"
+SetTracerParameter: NodeMongoDB21BackendTracer generatetransactionelement false
+SetTracerParameter: NodeMongoDB21BackendTracer probe nodejs
+
+SetTracerClassMapping: NodeMongoDB21ErrorReporter com.wily.introscope.agent.trace.hc2.MethodThrewErrorReportingTracer com.wily.introscope.probebuilder.validate.MetricNameValidator
+SetTracerParameter: NodeMongoDB21ErrorReporter nameformatter com.wily.introscope.agent.collector.trace.ReplaceParamsNameFormatter
+SetTracerParameter: NodeMongoDB21ErrorReporter reentrancy instance
+SetTracerParameter: NodeMongoDB21ErrorReporter useblame false
+SetTracerParameter: NodeMongoDB21ErrorReporter ownmetric false
+SetTracerParameter: NodeMongoDB21ErrorReporter probe nodejs
+
+SetTracerClassMapping: NodeMongoDB21Tracer com.wily.introscope.agent.collector.trace.ParamsDecoratorBlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeMongoDB21Tracer paramKeys "dbName,dbServer,collectionName,query,cursorId"
+SetTracerParameter: NodeMongoDB21Tracer nameformatter com.wily.introscope.agent.collector.trace.ReplaceParamsNameFormatter
+SetTracerParameter: NodeMongoDB21Tracer probe nodejs
+
+#######################
+# 
+# MongoDB Driver Version 1.4.x Tracing
+# ================
+
+SetFlag: NodeMongoDBDriver14
+TurnOn: NodeMongoDBDriver14
+
+SetFlag: NodeMongoDB14Tracing
+
+IdentifyTwoFlagIntersectionAsAggregateFlag: NodeMongoDBTracing NodeMongoDBDriver14 NodeMongoDB14Tracing
+
+IdentifyClassAs: mongodb14 NodeMongoDB14Tracing
+
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing find NodeMongoDB14BackendTracer "Backends|{database}" 
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing insert NodeMongoDB14BackendTracer "Backends|{database}" 
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing update NodeMongoDB14BackendTracer "Backends|{database}" 
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing remove NodeMongoDB14BackendTracer "Backends|{database}" 
+
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing find NodeMongoDB14Tracer "Backends|{database}|{method}" 
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing insert NodeMongoDB14Tracer "Backends|{database}|{method}" 
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing update NodeMongoDB14Tracer "Backends|{database}|{method}" 
+TraceOneMethodIfFlagged: NodeMongoDB14Tracing remove NodeMongoDB14Tracer "Backends|{database}|{method}" 
+
+SetTracerClassMapping: NodeMongoDB14Tracer com.wily.introscope.agent.trace.hc2.MongoDBTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeMongoDB14Tracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: NodeMongoDB14Tracer reentrancy none
+SetTracerParameter: NodeMongoDB14Tracer newmode true
+SetTracerParameter: NodeMongoDB14Tracer useblame true
+SetTracerParameter: NodeMongoDB14Tracer probe nodejs
+
+SetTracerClassMapping: NodeMongoDB14BackendTracer com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: NodeMongoDB14BackendTracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: NodeMongoDB14BackendTracer reentrancy instance
+SetTracerParameter: NodeMongoDB14BackendTracer forcestandardmetrics false
+SetTracerParameter: NodeMongoDB14BackendTracer newmode true
+SetTracerParameter: NodeMongoDB14BackendTracer useblame true
+SetTracerParameter: NodeMongoDB14BackendTracer agentcomponent "SQL Agent"
+SetTracerParameter: NodeMongoDB14BackendTracer generatetransactionelement false
+SetTracerParameter: NodeMongoDB14BackendTracer probe nodejs

@@ -1,0 +1,69 @@
+#
+# Copyright (c) 2014 CA. All rights reserved.
+#
+# This software and all information contained therein is confidential and proprietary and
+# shall not be duplicated, used, disclosed or disseminated in any way except as authorized
+# by the applicable license agreement, without the express written permission of CA. All
+# authorized reproductions must be marked with this language.
+#
+# EXCEPT AS SET FORTH IN THE APPLICABLE LICENSE AGREEMENT, TO THE EXTENT
+# PERMITTED BY APPLICABLE LAW, CA PROVIDES THIS SOFTWARE WITHOUT WARRANTY
+# OF ANY KIND, INCLUDING WITHOUT LIMITATION, ANY IMPLIED WARRANTIES OF
+# MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT WILL CA BE
+# LIABLE TO THE END USER OR ANY THIRD PARTY FOR ANY LOSS OR DAMAGE, DIRECT OR
+# INDIRECT, FROM THE USE OF THIS SOFTWARE, INCLUDING WITHOUT LIMITATION, LOST
+# PROFITS, BUSINESS INTERRUPTION, GOODWILL, OR LOST DATA, EVEN IF CA IS
+# EXPRESSLY ADVISED OF SUCH LOSS OR DAMAGE.
+#
+
+
+# Sample SELinux policy additions for systems with selinux set to "enforced" 
+# and "strict".
+# This is only a sample and the actual SELinux configuration could be different
+# between different versions and flavors of Linux.
+#
+# Note:  this is only for systems running SELinux in "enforced" mode.
+#
+# To determine what your SELinux configuration needs will be
+#  1. put selinux into "permissive" mode (varies, see /etc/selinux/config)
+#  2, clear your /var/log/audit/audit.log
+#  3. reboot
+#  4. start Apache with PHP and the CA PHP (if not started on boot)
+#  5. make a web request that will trigger PHP.
+#  6. run grep avc /var/log/audit/audit.log  | audit2allow -o captured.conf
+#  7. Add the desired policies in captured.conf to your selinux config.
+#  8. Revert selinux to "enforced" mode.
+
+
+
+#============= httpd_t ==============
+allow httpd_t file_t:dir { write search add_name };
+allow httpd_t file_t:file { write create };
+allow httpd_t port_t:tcp_socket name_connect;
+allow httpd_t self:capability ipc_owner;
+allow httpd_t self:process { execstack execmem };
+allow httpd_t usr_t:file { write create append };
+
+#============= staff_javaplugin_t ==============
+allow staff_javaplugin_t lo_node_t:tcp_socket node_bind;
+allow staff_javaplugin_t port_t:tcp_socket name_bind;
+allow staff_javaplugin_t self:tcp_socket { accept listen };
+allow staff_javaplugin_t sysfs_t:dir { read search };
+allow staff_javaplugin_t usr_t:file { write append };
+
+#============= staff_t ==============
+allow staff_t httpd_config_t:file read;
+allow staff_t httpd_config_t:lnk_file read;
+allow staff_t httpd_exec_t:file { read execute_no_trans };
+allow staff_t httpd_log_t:file append;
+allow staff_t httpd_log_t:lnk_file read;
+allow staff_t httpd_modules_t:file { read execute };
+allow staff_t httpd_modules_t:lnk_file read;
+allow staff_t httpd_sys_content_t:dir { write remove_name add_name };
+allow staff_t httpd_sys_content_t:file { write setattr read lock create unlink append };
+allow staff_t httpd_sys_content_t:lnk_file read;
+allow staff_t httpd_t:process { signal signull ptrace };
+allow staff_t httpd_t:sem { write unix_read unix_write associate read destroy };
+allow staff_t httpd_var_run_t:file { read write };
+allow staff_t mysqld_t:unix_stream_socket connectto;
+allow staff_t mysqld_var_run_t:sock_file write;

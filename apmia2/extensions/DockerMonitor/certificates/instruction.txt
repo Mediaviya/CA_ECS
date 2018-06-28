@@ -1,0 +1,2 @@
+1. Download the client certificate bundle from the UCP web UI, as explained in the Docker documentation https://docs.docker.com/datacenter/ucp/2.1/guides/user/access-ucp/cli-based-access/
+2. Put the ca.pem, cert.pem and key.pem under this ("certificates") folder

@@ -1,0 +1,38 @@
+<!--
+	Web Servers Configuration File
+	
+Use this file to add Web Servers to monitor and report them to Introscope
+Enterprise Manager. This file is also automatically updated by Discovery Engine
+if it is enabled.
+
+-->
+
+
+
+<WebServers>
+
+	<!-- Supported Web Servers Type:
+		Apache Web Server 		: Apache
+		IBM HTTP Server  		: Apache:IBM_HTTP_SERVER
+		Oracle HTTP Server		: Apache:Oracle-HTTP-Server
+		Microsoft IIS 			: Microsoft-IIS
+
+	-->
+	<!-- Add your web servers here -->
+	<!-- Example entries -->
+
+	<!-- Type attribute is base:variant for web servers other than Apache, Sun-ONE and IIS. variant is the server response header returned by a web server and base defines the base web server over which the variant is built. E.g. Oracle_HTTP_Server is a variant of Apache base web server. --> 
+
+	<!-- Monitoring over HTTPS requires Protocol and Mode attributes. -->
+	<!-- Protocol attribute sets the protocol over which SSL communication happens. Valid values are SSL and TLS. Default is SSL.  -->
+	<!-- Mode attribute specifies the mode over which the monitoring occurs. Valid values are Permissive and Non-Permissive. Default is Non-Permissive.  -->
+	<!--	
+	<WebServer Type="Apache" Enabled="true" ServerURL="http://wily-apache" DisplayName="Wily-Apache-13" RefreshFrequencyInSeconds="15"/>
+	<WebServer Type="Microsoft-IIS" Enabled="true" ServerURL="http://wily-iis" DisplayName="Wily-IIS-60" MetricsURL="iisperf"/>
+	<WebServer Type="Apache:IBM_HTTP_SERVER" Enabled="true" ServerURL="http://wily-ihs" DisplayName="Wily-IBM13" RefreshFrequencyInSeconds="15"/>	
+	<WebServer Type="Apache" Enabled="true" Protocol="SSL" ServerURL="https://wily-apache-ssl:449" DisplayName="wily-apache_ssl" Mode="Non-Permissive"/>
+	<WebServer Type="Apache" Enabled="true" Protocol="TLS" ServerURL="https://wily-apache-tls:443" DisplayName="wily-apache-tls_ssl" Mode="Permissive"/>
+	<WebServer Type="Apache:Oracle-HTTP-Server" Enabled="true" Protocol="TLS" ServerURL="https://wily-ohs:443" DisplayName="wily-ohs_443_ssl" Mode="Permissive"/>
+    -->
+    
+</WebServers>

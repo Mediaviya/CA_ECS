@@ -1,0 +1,46 @@
+#OID				DataType 		MetricPath:MetricName (cannot contain whitespace)
+
+1.3.6.1.2.1.1.5.0			Variable		HostName
+
+1.3.6.1.4.1.546.1.1.7.9.3.0	IntAverage		SystemEdge|{$HostName}|Memory:TotalMemory
+1.3.6.1.4.1.546.1.1.7.9.4.0	IntAverage		SystemEdge|{$HostName}|Memory:UsedMemory
+
+1.3.6.1.4.1.546.1.1.1.2.0	StringEvent		SystemEdge|{$HostName}|CPU:name
+1.3.6.1.4.1.546.13.2.0		LongAverage		SystemEdge|{$HostName}|CPU:TotalIdle
+1.3.6.1.4.1.546.13.3.0		LongAverage		SystemEdge|{$HostName}|CPU:TotalUser
+1.3.6.1.4.1.546.13.4.0		LongAverage		SystemEdge|{$HostName}|CPU:TotalSystem
+1.3.6.1.4.1.546.13.5.0		LongAverage		SystemEdge|{$HostName}|CPU:TotalWait
+1.3.6.1.4.1.546.13.7.0		IntAverage		SystemEdge|{$HostName}|CPU:TotalIdlePercent
+1.3.6.1.4.1.546.13.8.0		IntAverage		SystemEdge|{$HostName}|CPU:TotalUserPercent
+1.3.6.1.4.1.546.13.9.0		IntAverage		SystemEdge|{$HostName}|CPU:TotalSystemPercent
+1.3.6.1.4.1.546.13.10.0		IntAverage		SystemEdge|{$HostName}|CPU:TotalWaitPercent
+1.3.6.1.4.1.546.13.13.0		IntAverage		SystemEdge|{$HostName}|CPU:TotalUtilPercent
+
+1.3.6.1.4.1.546.13.1.1.1	TableKey		CoreId
+1.3.6.1.4.1.546.13.1.1.2	StringEvent		SystemEdge|{$HostName}|CPU|Core|{TABLE:CoreId}:Description
+1.3.6.1.4.1.546.13.1.1.14	IntAverage		SystemEdge|{$HostName}|CPU|Core|{TABLE:CoreId}:UtilPercent
+
+
+1.3.6.1.2.1.25.2.3.1.3		TableKey		StorageName
+1.3.6.1.2.1.25.2.3.1.5		LongCounter		SystemEdge|{$HostName}|Storage|{TABLE:StorageName}:Size
+1.3.6.1.2.1.25.2.3.1.6		LongCounter		SystemEdge|{$HostName}|Storage|{TABLE:StorageName}:Used
+
+1.3.6.1.2.1.2.1.0			IntCounter		SystemEdge|{$HostName}|Network|Interfaces:Count
+
+1.3.6.1.2.1.2.2.1.2			TableKey		InterfaceName
+1.3.6.1.2.1.2.2.1.10		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:InOctets
+1.3.6.1.2.1.2.2.1.13		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:InDiscards
+1.3.6.1.2.1.2.2.1.14		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:InErrors
+1.3.6.1.2.1.2.2.1.16		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:OutOctets
+1.3.6.1.2.1.2.2.1.19		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:OutDiscards
+1.3.6.1.2.1.2.2.1.20		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:OutErrors
+1.3.6.1.2.1.2.2.1.21		LongCounter		SystemEdge|{$HostName}|Network|Interfaces|{TABLE:InterfaceName}:QueueLength
+
+
+1.3.6.1.2.1.6.7.0			LongCounter		SystemEdge|{$HostName}|Network|TCP:AttemptFailures
+1.3.6.1.2.1.6.8.0			LongCounter		SystemEdge|{$HostName}|Network|TCP:ResetConnections
+1.3.6.1.2.1.6.9.0			IntCounter		SystemEdge|{$HostName}|Network|TCP:EstablishedConnections
+
+
+
+

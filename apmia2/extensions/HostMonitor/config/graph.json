@@ -1,0 +1,25 @@
+{
+  "graph": {
+    "vertices": [
+      {
+        "id": "HOST:$STRING(1.3.6.1.2.1.1.5)",
+		"layer": "INFRASTRUCTURE",
+        "attributes": {
+	  	  "type": "HOST",        
+          "name": "$STRING(1.3.6.1.2.1.1.5)",
+          "agent": "$AGENT",
+          "hostname": "$STRING(1.3.6.1.2.1.1.5)",
+          "ipAddress": "$STR_TABLE(1.3.6.1.2.1.4.20.1.1)",
+          "networkInterfaces": "$OBJ_TABLE(NETWORKINTERFACE)",
+          "storage": "$STR_TABLE(1.3.6.1.2.1.25.2.3.1.3)",
+          "systemMemory": "$LONG(1.3.6.1.4.1.546.1.1.1.3)",
+          "systemCPU": "$STRING(1.3.6.1.4.1.546.1.1.1.2)", 
+          "numberOfCPU": "$INTEGER(1.3.6.1.4.1.546.1.1.1.9.4)", 
+          "os": "$STRING(1.3.6.1.4.1.546.1.1.1.6)",
+          "TTPlugin.sourceID": "sysedge"
+        }
+      }
+    ],
+    "edges": []
+  }
+}

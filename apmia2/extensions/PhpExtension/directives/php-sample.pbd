@@ -1,0 +1,24 @@
+########################################################################
+# Introscope ProbeBuilder Directives File                              
+# 
+# Version: @@@INTROSCOPE_RELEASE_PLACE_HOLDER@@@
+# Build: @@@INTROSCOPE_BUILD_NUMBER_PLACE_HOLDER@@@
+#                                                                      
+# @@@INTROSCOPE_FULL_RELEASE_NAME_PLACE_HOLDER@@@
+# @@@INTROSCOPE_COPYRIGHT_STRING_PLACE_HOLDER@@@
+# @@@INTROSCOPE_REGISTERED_TRADEMARK_STRING_PLACE_HOLDER@@@
+########################################################################
+
+#########################################################
+# This file provides directives which implement support 
+# for various common PHP constructs.  It is intended to 
+# be used with the Introscope default files.            
+#########################################################
+
+# This is a Sample Backend tracing
+
+SetFlag: SamplePhpTracing
+
+IdentifyClassAs: MySQLDB SamplePhpTracing 
+
+TraceAllMethodsIfFlagged: SamplePhpTracing PhpBackendMarker "Backends|{classname}"

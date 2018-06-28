@@ -1,0 +1,37 @@
+########################################################################
+# Introscope ProbeBuilder Directives File                              
+# 
+# Version: @@@INTROSCOPE_RELEASE_PLACE_HOLDER@@@
+# Build: @@@INTROSCOPE_BUILD_NUMBER_PLACE_HOLDER@@@
+#                                                                      
+# @@@INTROSCOPE_FULL_RELEASE_NAME_PLACE_HOLDER@@@
+# @@@INTROSCOPE_COPYRIGHT_STRING_PLACE_HOLDER@@@
+# @@@INTROSCOPE_REGISTERED_TRADEMARK_STRING_PLACE_HOLDER@@@
+########################################################################
+
+#############################################################
+#
+# This nodejs-toggles.pbd file provides TurnOn toggle switches
+#   to determine honoring of other directives
+#   in subsequent *.pbd files
+#
+# Comment or uncomment the "TurnOn" directives 
+#   to alter the set of NodeJs components that are traced.      
+#
+# nodejs-toggles.pbd
+#   by default, comments out (turns off) many flags
+#   for Production use.
+#
+#############################################################
+
+
+TurnOn: NodeHttpFrontendTracing
+TurnOn: NodeFileBackendTracing
+TurnOn: NodeClassDeepTracing
+TurnOn: NodeHttpBackendTracing
+TurnOn: FragmentTracing
+TurnOn: NodeSqlTracing
+TurnOn: LoopbackDAOTracing
+TurnOn: ExpressTracing
+TurnOn: NodeMongoDBTracing
+

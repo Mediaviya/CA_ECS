@@ -1,0 +1,32 @@
+<!--
+	Apache Custom Metrics File
+
+File to map the customized Apache metric names
+with the standard expected ones. 
+
+-->
+
+
+<CustomMetrics>
+
+	<!-- Sample entries for an apache web server and its derivatives like IBM HTTP Server that have a customized version of mod_status module -->
+	<!-- multiplier and divisor accepts integer values. If the specified value is less than or equal to zero, we use their default values i.e. 1 -->
+	<!--
+	<Metric name="Total Accesses">
+		<Alias name="Total kHits" multiplier="1000"/>
+		<Alias name="Total Clicks"/>
+	</Metric>
+	<Metric name="Total kBytes">
+		<Alias name="Total Bytes" divisor="1024"/>
+   		<Alias name="Total mBytes" multiplier="1024"/>
+	</Metric>
+	<Metric name="BusyWorkers">
+		<Alias name="BusyLabours"/>
+		<Alias name="BusyThreads"/>
+	</Metric>
+        <Metric name="IdleWorkers">
+		<Alias name="IdleLabours"/>
+		<Alias name="IdleThreads"/>
+	</Metric>
+	-->
+</CustomMetrics>

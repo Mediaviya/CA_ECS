@@ -1,0 +1,273 @@
+<stats vertexId="F5_LTM" version="1.0.0">
+
+	<stat url="/mgmt/tm/ltm/pool/stats" componentName="Pools" monitor="true"
+		atcMetric="true" atcAlert="false" aggregate="true" children="entries">
+		
+		<naming use-entry-name="true" metricPaths="" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|activeMemberCnt" metricName=":Active Members" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|curSessions" metricName=":Current Sessions" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="true" metricPath="nestedStats|entries|serverside.curConns" metricName=":Current Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|serverside.maxConns" metricName=":Max Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|serverside.totConns" metricName=":Total Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|totRequests" metricName=":Total Requests" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|serverside.bitsIn" metricName=":Incoming Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|serverside.bitsOut" metricName=":Outgoing Bytes" />
+		<stat url="/mgmt/tm/ltm/pool/$PARENT_NAME/members/stats" monitor="true"
+			atcMetric="false" atcAlert="false"  aggregate="false" componentName="Pools|$PARENT_LABEL|Pool Members"
+			children="entries">
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|curSessions" metricName=":Current Sessions" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|serverside.curConns" metricName=":Current Connections" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|serverside.maxConns" metricName=":Max Connections" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|serverside.totConns" metricName=":Total Connections" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|totRequests" metricName=":Total Requests" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|serverside.bitsIn" metricName=":Incoming Bytes" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|serverside.bitsOut" metricName=":Outgoing Bytes" />
+		</stat>
+	
+	</stat>
+	<stat url="/mgmt/tm/net/interface/stats" componentName="Network Interfaces"
+		monitor="true" atcMetric="false" atcAlert="false"  aggregate="false" children="entries">
+		
+		<naming use-entry-name="true" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|counters.bitsIn" metricName=":Incoming Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|counters.bitsOut" metricName=":Outgoing Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|counters.dropsAll" metricName=":Packets Dropped" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|counters.errorsAll" metricName=":Errors" />
+	</stat>
+	
+	<stat url="/mgmt/tm/ltm/profile/tcp/stats" componentName="TCP"
+		monitor="true" atcMetric="false" atcAlert="false"  aggregate="false" children="entries">
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|connects" metricName=":Connects" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|connfails" metricName=":Connects Failed" />
+	</stat>
+
+	<stat url="/mgmt/tm/ltm/profile/http/stats" componentName="HTTP"
+		monitor="true" atcMetric="true" atcAlert="true"  aggregate="true" children="entries">
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|getReqs" metricName=":Total GET Requests" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|postReqs" metricName=":Total POST Requests" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="true" metricPath="nestedStats|entries|numberReqs" metricName=":Total Requests" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="true" metricPath="nestedStats|entries|resp_2xxCnt" metricName=":Total 2xx Response" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|resp_3xxCnt" metricName=":Total 3xx Response" />
+		<metric atcMetric="true" atcAlert="true"
+			aggregate="true" metricPath="nestedStats|entries|resp_4xxCnt" metricName=":Total 4xx Response" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|resp_5xxCnt" metricName=":Total 5xx Response" />
+	</stat>
+	<stat url="/mgmt/tm/sys/disk/logical-disk" componentName="Logical Disks"
+		monitor="true" atcMetric="false" atcAlert="false"  aggregate="false" children="items">
+		<naming metricPaths="name" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="size" metricName=":Size Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="vgFree" metricName=":VG Free Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="vgInUse" metricName=":VG Inuse Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="vgReserved" metricName=":VG Reserved Bytes" />
+	</stat>
+
+	<stat url="/mgmt/tm/sys/hostInfo" componentName="Hosts" monitor="true"
+		atcMetric="false" atcAlert="false"  aggregate="false" children="entries">
+		<naming metricPaths="nestedStats|entries|hostId" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|activeCpuCount" metricName="|CPU:Active CPU Count" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|cpuCount" metricName="|CPU:Total CPU Count" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|memoryTotal" metricName="|Memory:Total Memory" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|memoryUsed" metricName="|Memory:Used Memory" />
+		<stat componentName="Hosts|$PARENT_LABEL|PER CPU" monitor="true"
+			atcMetric="false" atcAlert="false"
+			children="nestedStats|entries|*|nestedStats|entries|*">
+			<naming metricPaths="nestedStats|entries|cpuId" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|oneMinAvgIdle" metricName=":Idle %" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|oneMinAvgIowait" metricName=":IO Wait %" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|oneMinAvgIrq" metricName=":IRQ %" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|oneMinAvgStolen" metricName=":Stolen %" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|oneMinAvgSystem" metricName=":System %" />
+			<metric atcMetric="false" atcAlert="false"
+				aggregate="false" metricPath="nestedStats|entries|oneMinAvgUser" metricName=":User %" />
+		</stat>
+	</stat>
+
+	<stat url="/mgmt/tm/ltm/virtual/stats" componentName="Virtual Servers"
+		monitor="true" atcMetric="false" atcAlert="false" aggregate="false" children="entries">
+		<naming use-entry-name="true" />
+
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.slowKilled" metricName="|ClientSide:Slow Killed" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|csMeanConnDur" metricName="|ClientSide:Mean Connection Duration (ms)" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|csMinConnDur" metricName="|ClientSide:Min Connection Duration (ms)" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|csMaxConnDur" metricName="|ClientSide:Max Connection Duration (ms)" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.totConns" metricName="|ClientSide:Total Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.maxConns" metricName="|ClientSide:Max Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.evictedConns" metricName="|ClientSide:Evicted Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.curConns" metricName="|ClientSide:Current Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.bitsIn" metricName="|ClientSide:Incoming Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|clientside.bitsOut" metricName="|ClientSide:Outgoing Bytes" />
+
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|ephemeral.slowKilled" metricName="|Ephemeral:Slow Killed" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|ephemeral.maxConns" metricName="|Ephemeral:Max Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|ephemeral.evictedConns" metricName="|Ephemeral:Evicted Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|ephemeral.curConns" metricName="|Ephemeral:Current Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|ephemeral.bitsIn" metricName="|Ephemeral:Incoming Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|ephemeral.bitsOut" metricName="|Ephemeral:Outgoing Bytes" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|oneMinAvgUsageRatio" metricName=":Usage Ratio" />
+	</stat>
+
+	<stat url="/mgmt/tm/ltm/rule/stats" componentName="Rules" monitor="true"
+		atcMetric="true" atcAlert="true" aggregate="true" children="entries"
+		monitoredNames="_sys_auth_ldap,_sys_auth_radius">
+		<naming use-entry-name="true" />
+
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|aborts" metricName=":Aborts" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|avgCycles" metricName=":Avg Cycles" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="true" metricPath="nestedStats|entries|maxCycles" metricName=":Max Cycles" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|minCycles" metricName=":Min Cycles" />
+		<metric atcMetric="false" atcAlert="true"
+			aggregate="false" metricPath="nestedStats|entries|failures" metricName=":Failures" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|priority" metricName=":Priority" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|totalExecutions" metricName=":Total Executions" />
+
+	</stat>
+
+	<stat url="/mgmt/tm/ltm/profile/server-ssl/stats" componentName="Server SSL Profile"
+		monitor="true" atcMetric="true" atcAlert="false"  aggregate="true"  children="entries">
+		<naming use-entry-name="true" />
+
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.curConns" metricName=":Current Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.fatalAlerts" metricName=":Fatal Alerts" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.secureHandshakes" metricName=":Secure Handshakes" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="true" metricPath="nestedStats|entries|common.handshakeFailures" metricName=":Handshake Failures" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.insecureHandshakeAccepts"
+			metricName=":Insecure Handshake Accepts" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.insecureHandshakeRejects"
+			metricName=":Insecure Handshake Rejects" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.insecureRenegotiationRejects"
+			metricName=":Insecure Renegotiation Rejects" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.maxConns" metricName=":Max Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.dtlsv1"
+			metricName=":Protocol Uses - DTLSv1" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.sslv2"
+			metricName=":Protocol Uses - SSLv2" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.sslv3"
+			metricName=":Protocol Uses - SSLV3" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.tlsv1"
+			metricName=":Protocol Uses - TLSv1" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.tlsv1_1"
+			metricName=":Protocol Uses - TLSv1.1" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.tlsv1_2"
+			metricName=":Protocol Uses - TLSv1.2" />
+	</stat>
+
+	<stat url="/mgmt/tm/ltm/profile/client-ssl/stats" componentName="Client SSL Profile"
+		monitor="true" atcMetric="true" atcAlert="false"  aggregate="true" children="entries">
+		<naming use-entry-name="true" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.curConns" metricName=":Current Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.fatalAlerts" metricName=":Fatal Alerts" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.secureHandshakes" metricName=":Secure Handshakes" />
+		<metric atcMetric="true" atcAlert="false"
+			aggregate="true" metricPath="nestedStats|entries|common.handshakeFailures" metricName=":Handshake Failures" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.insecureHandshakeAccepts"
+			metricName=":Insecure Handshake Accepts" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.insecureHandshakeRejects"
+			metricName=":Insecure Handshake Rejects" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.insecureRenegotiationRejects"
+			metricName=":Insecure Renegotiation Rejects" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.maxConns" metricName=":Max Connections" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.dtlsv1"
+			metricName=":Protocol Uses - DTLSv1" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.sslv2"
+			metricName=":Protocol Uses - SSLv2" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.sslv3"
+			metricName=":Protocol Uses - SSLV3" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.tlsv1"
+			metricName=":Protocol Uses - TLSv1" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.tlsv1_1"
+			metricName=":Protocol Uses - TLSv1.1" />
+		<metric atcMetric="false" atcAlert="false"
+			aggregate="false" metricPath="nestedStats|entries|common.protocolUses.tlsv1_2"
+			metricName=":Protocol Uses - TLSv1.2" />
+	</stat>
+
+</stats>

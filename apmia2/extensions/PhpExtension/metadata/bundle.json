@@ -1,0 +1,10 @@
+{
+    "specificationVersion": "2",
+    "name" : "PhpExtension",
+    "displayName" : "Collector Agent Extension for PHP Probe Support",
+    "version" : "1.0",
+    "type": "java",
+    "dependencies" : [ ],
+    "dynamic" : false,
+    "compatibility": {"osName" : ["windows", "unix"], "agentVersion" : ">=10.4, <=10.4" }
+}

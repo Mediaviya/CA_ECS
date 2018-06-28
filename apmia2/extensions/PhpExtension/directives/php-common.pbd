@@ -1,0 +1,377 @@
+########################################################################
+# Introscope ProbeBuilder Directives File                              
+# 
+# Version: @@@INTROSCOPE_RELEASE_PLACE_HOLDER@@@
+# Build: @@@INTROSCOPE_BUILD_NUMBER_PLACE_HOLDER@@@
+#                                                                      
+# @@@INTROSCOPE_FULL_RELEASE_NAME_PLACE_HOLDER@@@
+# @@@INTROSCOPE_COPYRIGHT_STRING_PLACE_HOLDER@@@
+# @@@INTROSCOPE_REGISTERED_TRADEMARK_STRING_PLACE_HOLDER@@@
+########################################################################
+
+#########################################################
+# This file provides directives which implement support 
+# for various common PHP constructs.  It is intended to 
+# be used with the Introscope default files.            
+#########################################################
+
+
+SetFlag: PhpScriptFrontendTracing
+
+IdentifyClassAs: ScriptInit PhpScriptFrontendTracing
+
+TraceAllMethodsIfFlagged: PhpScriptFrontendTracing PhpHttpFrontendTracer "Frontends|Apps"
+TraceAllMethodsIfFlagged: PhpScriptFrontendTracing PhpExceptionErrorReporter "Frontends|Apps:Errors Per Interval"
+
+SetTracerClassMapping: PhpHttpFrontendTracer com.wily.introscope.agent.trace.hc2.HttpServletTracerWithAgentRoute com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpHttpFrontendTracer generatebusinesstransactionmetrics true
+SetTracerParameter: PhpHttpFrontendTracer newmode true
+SetTracerParameter: PhpHttpFrontendTracer useblame true
+SetTracerParameter: PhpHttpFrontendTracer usecomputedblame true
+SetTracerParameter: PhpHttpFrontendTracer probe php
+SetTracerOrdering: PhpHttpFrontendTracer -1000
+
+SetFlag: PhpClassDeepTracing
+
+IdentifyAllClassesAs: PhpClassDeepTracing
+SkipClassForFlag: ScriptInit PhpClassDeepTracing
+SkipClassForFlag: ScriptRun PhpClassDeepTracing
+
+TraceAllMethodsIfFlagged: PhpClassDeepTracing PhpTTOnlyTracer "na"
+
+SetFlag: PhpScriptDeepTracing
+
+IdentifyClassAs: ScriptRun PhpScriptDeepTracing
+
+TraceAllMethodsIfFlagged: PhpScriptDeepTracing PhpScriptTracer "{filename}"
+
+SetTracerClassMapping: PhpBackendMarker com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpBackendMarker nameformatter com.wily.introscope.agent.trace.php.nameformatter.PhpCachedNameFormatter
+SetTracerParameter: PhpBackendMarker reentrancy none
+SetTracerParameter: PhpBackendMarker useblame true
+SetTracerParameter: PhpBackendMarker newmode true
+SetTracerParameter: PhpBackendMarker probe php
+
+SetTracerClassMapping: PhpFrontendMarker com.wily.introscope.agent.trace.hc2.FrontendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpFrontendMarker nameformatter com.wily.introscope.agent.trace.php.nameformatter.PhpNameFormatter
+SetTracerParameter: PhpFrontendMarker reentrancy none
+SetTracerParameter: PhpFrontendMarker useblame true
+SetTracerParameter: PhpFrontendMarker newmode true
+SetTracerParameter: PhpFrontendMarker probe php
+
+SetTracerClassMapping: PhpBlamePointTracer com.wily.introscope.agent.trace.hc2.BlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpBlamePointTracer nameformatter com.wily.introscope.agent.trace.php.nameformatter.PhpNameFormatter
+SetTracerParameter: PhpBlamePointTracer reentrancy none
+SetTracerParameter: PhpBlamePointTracer useblame true
+SetTracerParameter: PhpBlamePointTracer newmode true
+SetTracerParameter: PhpBlamePointTracer probe php
+
+SetTracerClassMapping: PhpTTOnlyTracer DeepTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpTTOnlyTracer probe php
+
+SetTracerClassMapping: PhpScriptTracer com.wily.introscope.agent.trace.hc2.BlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpScriptTracer nameformatter com.wily.introscope.agent.trace.php.nameformatter.PhpNameFormatter
+SetTracerParameter: PhpScriptTracer reentrancy none
+SetTracerParameter: PhpScriptTracer useblame true
+SetTracerParameter: PhpScriptTracer newmode true
+SetTracerParameter: PhpScriptTracer useblame true
+SetTracerParameter: PhpScriptTracer computemetrics false
+SetTracerParameter: PhpScriptTracer probe php
+
+SetTracerClassMapping: PhpExceptionErrorReporter com.wily.introscope.agent.trace.hc2.MethodThrewErrorReportingTracer com.wily.introscope.probebuilder.validate.MetricNameValidator
+SetTracerParameter: PhpExceptionErrorReporter nameformatter com.wily.introscope.agent.trace.php.nameformatter.PhpNameFormatter
+SetTracerParameter: PhpExceptionErrorReporter reentrancy instance
+SetTracerParameter: PhpExceptionErrorReporter useblame false
+SetTracerParameter: PhpExceptionErrorReporter ownmetric false
+SetTracerParameter: PhpExceptionErrorReporter probe php
+
+
+#####################################################
+#
+# PHP SQL Tracing
+#####################################################
+
+SetFlag: PhpSqlTracing
+SetFlag: PhpSqlPreparedStatementTracing
+SetFlag: PhpSqlStatementTracing
+IdentifyTwoFlagIntersectionAsAggregateFlag: PhpSqlPreparedStatementTracing PhpSqlTracing PhpSqlStatementTracing
+
+IdentifyClassAs: Global PhpSqlTracing
+IdentifyClassAs: PDO PhpSqlTracing
+IdentifyClassAs: mysqli PhpSqlTracing
+
+SetFlag: PhpSqlStatementTracing
+IdentifyClassAs: Global PhpSqlStatementTracing
+IdentifyClassAs: mysqli_stmt PhpSqlStatementTracing
+IdentifyClassAs: PDOStatement PhpSqlStatementTracing
+
+#mysql
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_query PhpBackendTracer "Backends|{database}"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_db_query PhpBackendTracer "Backends|{database}"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_unbuffered_query PhpBackendTracer "Backends|{database}"
+#mysqli and PDO
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_query PhpBackendTracer "Backends|{database}"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_real_query PhpBackendTracer "Backends|{database}"
+TraceOneMethodIfFlagged: PhpSqlTracing exec PhpBackendTracer "Backends|{database}"
+TraceOneMethodIfFlagged: PhpSqlTracing query PhpBackendTracer "Backends|{database}"
+TraceOneMethodIfFlagged: PhpSqlTracing real_query PhpBackendTracer "Backends|{database}"
+
+#mysql
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_query DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_db_query DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_unbuffered_query DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+#mysqli and PDO client
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_query DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_real_query DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceOneMethodIfFlagged: PhpSqlTracing exec DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceOneMethodIfFlagged: PhpSqlTracing query DbCommandTracer "Backends|{database}|SQL|{commandtype}|Query|{sql}"
+TraceOneMethodIfFlagged: PhpSqlTracing real_query DbCommandTracer "Backends|{database}"
+
+#prepared statements
+TraceOneMethodWithParametersIfFlagged: PhpSqlTracing mysqli_prepare PhpStatementIdToStatementMappingTracer "SQLAgent"
+TraceOneMethodWithParametersIfFlagged: PhpSqlTracing prepare PhpStatementIdToStatementMappingTracer "SQLAgent"
+TraceOneMethodWithParametersIfFlagged: PhpSqlTracing oci_parse PhpStatementIdToStatementMappingTracer "SQLAgent"
+
+TraceOneMethodWithParametersIfFlagged: PhpSqlTracing mysqli_prepare PhpStatementToSQLMappingTracer "SQLAgent"
+TraceOneMethodWithParametersIfFlagged: PhpSqlTracing prepare PhpStatementToSQLMappingTracer "SQLAgent"
+TraceOneMethodWithParametersIfFlagged: PhpSqlTracing oci_parse PhpStatementToSQLMappingTracer "SQLAgent"
+
+
+#prepared statements
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing mysqli_stmt_execute PhpStatementBackendTracer "Backends|{database}"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing execute PhpStatementBackendTracer "Backends|{database}"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing oci_execute PhpStatementBackendTracer "Backends|{database}"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing mysqli_stmt_execute PhpStatementBackendTracer "Backends|{database}|SQL|{commandtype}|{querytype}|{sql}"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing execute PhpStatementBackendTracer "Backends|{database}|SQL|{commandtype}|{querytype}|{sql}"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing oci_execute PhpStatementBackendTracer "Backends|{database}|SQL|{commandtype}|{querytype}|{sql}"
+
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing mysqli_stmt_execute PhpPreparedStatementExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|{querytype}|{sql}:Errors Per Interval"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing execute PhpPreparedStatementExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|{querytype}|{sql}:Errors Per Interval"
+TraceOneMethodWithParametersIfFlagged: PhpSqlStatementTracing oci_execute PhpPreparedStatementExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|{querytype}|{sql}:Errors Per Interval"
+
+TraceOneMethodIfFlagged: PhpSqlTracing commit PhpDbTransactionTracer "Backends|{database}|Commits"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_commit PhpDbTransactionTracer "Backends|{database}|Commits"
+TraceOneMethodIfFlagged: PhpSqlTracing oci_commit PhpDbTransactionTracer "Backends|{database}|Commits"
+
+TraceOneMethodIfFlagged: PhpSqlTracing rollback PhpDbTransactionTracer "Backends|{database}|Rollbacks"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_rollback PhpDbTransactionTracer "Backends|{database}|Rollbacks"
+TraceOneMethodIfFlagged: PhpSqlTracing oci_rollback PhpDbTransactionTracer "Backends|{database}|Rollbacks"
+
+TraceOneMethodIfFlagged: PhpSqlTracing commit PhpSQLQueryExceptionErrorReporter "Backends|{database}|Commits:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_commit PhpSQLQueryExceptionErrorReporter "Backends|{database}|Commits:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing oci_commit PhpSQLQueryExceptionErrorReporter "Backends|{database}|Commits:Errors Per Interval"
+
+TraceOneMethodIfFlagged: PhpSqlTracing rollback PhpSQLQueryExceptionErrorReporter "Backends|{database}|Rollbacks:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_rollback PhpSQLQueryExceptionErrorReporter "Backends|{database}|Rollbacks:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing oci_rollback PhpSQLQueryExceptionErrorReporter "Backends|{database}|Rollbacks:Errors Per Interval"
+
+#mysql client
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_db_query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_unbuffered_query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+#mysqli and PDO client
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_real_query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing exec PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+TraceOneMethodIfFlagged: PhpSqlTracing real_query PhpSQLQueryExceptionErrorReporter "Backends|{database}|SQL|{commandtype}|Query|{sql}:Errors Per Interval"
+
+#mysql client
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqlp_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing mysql_select_db PhpTTOnlyTracer "na"
+#mysqli client
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_real_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing mysqli_select_db PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing real_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing select_db PhpTTOnlyTracer "na"
+#PDO client
+TraceOneMethodIfFlagged: PhpSqlTracing __construct PhpTTOnlyTracer "na"
+#OCI client
+TraceOneMethodIfFlagged: PhpSqlTracing oci_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing oci_pconnect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing oci_new_connect PhpTTOnlyTracer "na"
+TraceOneMethodIfFlagged: PhpSqlTracing ocilogon PhpTTOnlyTracer "na"
+
+SetTracerClassMapping: PhpBackendTracer com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpBackendTracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: PhpBackendTracer reentrancy instance
+SetTracerParameter: PhpBackendTracer forcestandardmetrics false
+SetTracerParameter: PhpBackendTracer newmode true
+SetTracerParameter: PhpBackendTracer useblame true
+SetTracerParameter: PhpBackendTracer agentcomponent "SQL Agent"
+SetTracerParameter: PhpBackendTracer probe php
+
+
+SetTracerClassMapping: PhpStatementIdToStatementMappingTracer com.wily.introscope.agent.sqlagent.ProbeStatementIdToStatementMappingTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpStatementIdToStatementMappingTracer agentcomponent "SQL Agent"
+SetTracerParameter: PhpStatementIdToStatementMappingTracer reentrancy instance
+SetTracerParameter: PhpStatementIdToStatementMappingTracer forcestandardmetrics false
+SetTracerParameter: PhpStatementIdToStatementMappingTracer newmode true
+SetTracerParameter: PhpStatementIdToStatementMappingTracer useblame false
+SetTracerParameter: PhpStatementIdToStatementMappingTracer probe php
+SetTracerOrdering: PhpStatementIdToStatementMappingTracer -1000001
+
+SetTracerClassMapping: PhpStatementToSQLMappingTracer com.wily.introscope.agent.sqlagent.ProbeStatementToSQLMappingTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpStatementToSQLMappingTracer agentcomponent "SQL Agent"
+SetTracerParameter: PhpStatementToSQLMappingTracer reentrancy instance
+SetTracerParameter: PhpStatementToSQLMappingTracer forcestandardmetrics false
+SetTracerParameter: PhpStatementToSQLMappingTracer newmode true
+SetTracerParameter: PhpStatementToSQLMappingTracer useblame false
+SetTracerParameter: PhpStatementToSQLMappingTracer probe php
+SetTracerOrdering: PhpStatementToSQLMappingTracer -1000002
+
+SetTracerClassMapping: PhpStatementBackendTracer com.wily.introscope.agent.trace.hc2.BackendTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpStatementBackendTracer nameformatter com.wily.introscope.agent.sqlagent.ProbeStatementNameFormatter
+SetTracerParameter: PhpStatementBackendTracer reentrancy instance
+SetTracerParameter: PhpStatementBackendTracer forcestandardmetrics false
+SetTracerParameter: PhpStatementBackendTracer newmode true
+SetTracerParameter: PhpStatementBackendTracer useblame true
+SetTracerParameter: PhpStatementBackendTracer agentcomponent "SQL Agent"
+SetTracerParameter: PhpStatementBackendTracer probe php
+
+SetTracerClassMapping: PhpSQLQueryExceptionErrorReporter com.wily.introscope.agent.trace.hc2.MethodThrewErrorReportingTracer com.wily.introscope.probebuilder.validate.MetricNameValidator
+SetTracerParameter: PhpSQLQueryExceptionErrorReporter nameformatter com.wily.introscope.agent.sqlagent.ProbeStatementNameFormatter
+SetTracerParameter: PhpSQLQueryExceptionErrorReporter reentrancy instance
+SetTracerParameter: PhpSQLQueryExceptionErrorReporter agentcomponent "SQL Agent"
+SetTracerParameter: PhpSQLQueryExceptionErrorReporter probe php
+
+SetTracerClassMapping: PhpPreparedStatementExceptionErrorReporter com.wily.introscope.agent.trace.hc2.MethodThrewErrorReportingTracer com.wily.introscope.probebuilder.validate.MetricNameValidator
+SetTracerParameter: PhpPreparedStatementExceptionErrorReporter nameformatter com.wily.introscope.agent.sqlagent.ProbeStatementNameFormatter
+SetTracerParameter: PhpPreparedStatementExceptionErrorReporter reentrancy instance
+SetTracerParameter: PhpPreparedStatementExceptionErrorReporter agentcomponent "SQL Agent"
+SetTracerParameter: PhpPreparedStatementExceptionErrorReporter probe php
+
+SetTracerClassMapping: DbCommandTracer com.wily.introscope.agent.sqlagent.hc2.SQLStatementBlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: DbCommandTracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: DbCommandTracer reentrancy instance
+SetTracerParameter: DbCommandTracer dostalls false
+SetTracerParameter: DbCommandTracer newmode true
+SetTracerParameter: DbCommandTracer useblame true
+SetTracerParameter: DbCommandTracer agentcomponent "SQL Agent"
+SetTracerParameter: DbCommandTracer probe php
+
+SetTracerClassMapping: PhpDbTransactionTracer com.wily.introscope.agent.trace.hc2.BlamePointTracer com.wily.introscope.probebuilder.validate.ResourceNameValidator
+SetTracerParameter: PhpDbTransactionTracer nameformatter com.wily.introscope.agent.sqlagent.StatementNameFormatter
+SetTracerParameter: PhpDbTransactionTracer reentrancy instance
+SetTracerParameter: PhpDbTransactionTracer newmode true
+SetTracerParameter: PhpDbTransactionTracer useblame true
+SetTracerParameter: PhpDbTransactionTracer agentcomponent "SQL Agent"
+SetTracerParameter: PhpDbTransactionTracer probe php
+
+#Skips for deep tracing:
+
+SkipMethodForClass: Global str_replace
+SkipMethodForClass: Global strpos
+SkipMethodForClass: Global strrpos
+SkipMethodForClass: Global trim
+SkipMethodForClass: Global substr
+SkipMethodForClass: Global strtoupper
+SkipMethodForClass: Global strtolower
+SkipMethodForClass: Global hash
+SkipMethodForClass: Global count
+SkipMethodForClass: Global implode
+SkipMethodForClass: Global explode
+SkipMethodForClass: Global ucwords
+SkipMethodForClass: Global ucfirst
+SkipMethodForClass: Global is_array
+SkipMethodForClass: Global in_array
+SkipMethodForClass: Global is_null
+SkipMethodForClass: Global is_string
+SkipMethodForClass: Global is_int
+SkipMethodForClass: Global is_file
+SkipMethodForClass: Global is_dir
+SkipMethodForClass: Global is_dir_writeable
+SkipMethodForClass: Global is_file
+SkipMethodForClass: Global is_bool
+SkipMethodForClass: Global is_object
+SkipMethodForClass: Global is_numeric
+SkipMethodForClass: Global is_readable
+SkipMethodForClass: Global is_writable
+SkipMethodForClass: Global is_callable
+SkipMethodForClass: Global is_float
+SkipMethodForClass: Global preg_match
+SkipMethodForClass: Global preg_match_all
+SkipMethodForClass: Global preg_replace
+SkipMethodForClass: Global preg_split
+SkipMethodForClass: Global array_key_exists
+SkipMethodForClass: Global array_keys
+SkipMethodForClass: Global array_search
+SkipMethodForClass: Global array_splice
+SkipMethodForClass: Global array_slice
+SkipMethodForClass: Global array_intersect
+SkipMethodForClass: Global array_shift
+SkipMethodForClass: Global array_unshift
+SkipMethodForClass: Global array_filter
+SkipMethodForClass: Global array_push
+SkipMethodForClass: Global array_merge
+SkipMethodForClass: Global array_unique
+SkipMethodForClass: Global class_exists
+SkipMethodForClass: Global method_exists
+SkipMethodForClass: Global file_exists
+SkipMethodForClass: Global uc_words
+SkipMethodForClass: Global strlen
+SkipMethodForClass: Global stripos
+SkipMethodForClass: Global strtr
+SkipMethodForClass: Global each
+SkipMethodForClass: Global crc32
+SkipMethodForClass: Global func_get_args
+SkipMethodForClass: Global ob_get_clean
+SkipMethodForClass: Global get_class
+SkipMethodForClass: Global defined
+SkipMethodForClass: Global define
+SkipMethodForClass: Global sprintf
+SkipMethodForClass: Global intval
+SkipMethodForClass: Global gmmktime
+SkipMethodForClass: Global mktime
+SkipMethodForClass: Global date
+SkipMethodForClass: Global time
+SkipMethodForClass: Global realpath
+SkipMethodForClass: Global function_exists
+SkipMethodForClass: Global setlocale
+SkipMethodForClass: Global next
+SkipMethodForClass: Global rtrim
+SkipMethodForClass: Global now
+
+SkipMethodForClass: Global mysqli_error
+SkipMethodForClass: Global mysql_error
+SkipMethodForClass: Global oci_error
+SkipMethodForClass: PDO errorInfo
+
+SkipClassForFlag: Zend_Cache_Backend_File PhpClassDeepTracing
+
+#Below methods are already configured with TTonlyTracer. 
+#So excluding them from deep tracing.
+SkipMethodForFlag: PhpClassDeepTracing mysql_connect
+SkipMethodForFlag: PhpClassDeepTracing mysqlp_connect
+SkipMethodForFlag: PhpClassDeepTracing mysql_select_db
+SkipMethodForFlag: PhpClassDeepTracing mysqli
+SkipMethodForFlag: PhpClassDeepTracing mysqli_connect
+SkipMethodForFlag: PhpClassDeepTracing mysqli_real_connect
+SkipMethodForFlag: PhpClassDeepTracing mysqli_select_db
+SkipMethodForFlag: PhpClassDeepTracing real_connect
+SkipMethodForFlag: PhpClassDeepTracing select_db
+SkipMethodForFlag: PhpClassDeepTracing oci_connect
+SkipMethodForFlag: PhpClassDeepTracing oci_pconnect
+SkipMethodForFlag: PhpClassDeepTracing ocilogon
+SkipMethodForFlag: PhpClassDeepTracing oci_new_connect
+
+SkipClassForFlag: PDO PhpClassDeepTracing
+
+# Skip all the Varien compiler for magento application
+
+SkipClassForFlag: Varien_Profiler PhpClassDeepTracing
+SkipClassForFlag: Varien_Autoload PhpClassDeepTracing
+SkipClassForFlag: Varien_Object PhpClassDeepTracing
+SkipClassForFlag: Varien_Cache_Core PhpClassDeepTracing
+SkipClassForFlag: Varien_Data_Collection_Db PhpClassDeepTracing
+
+# Deep tracer must be first in order to work.
+SetTracerOrdering: PhpTTOnlyTracer -10000
+
+# Toggles
+#=================================
+
+TurnOn: PhpSqlPreparedStatementTracing

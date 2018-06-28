@@ -1,0 +1,70 @@
+<!--
+	Discovery Configuration File
+	
+Use this file to specify networks to scan for Web Servers and report them to Introscope
+Enterprise Manager		
+
+-->
+
+
+<DiscoveryConfig>
+
+    <!-- Specify the frequency (in minutes) in which the auto discovery should run --> 
+	<Schedule>30</Schedule>
+	
+    <!-- Specify the number of threads to run for discovering a single subnet -->
+	<Concurrency>10</Concurrency>
+	
+    <!-- Specify whether the discovered servers should be reported to EM or not. Valid entries: true or false -->
+	<ReportToEM>true</ReportToEM>
+	
+    <!-- Add your subnets here -->
+
+    <!-- Example entries -->
+    <!-- Specify details of subnets to be scanned for webservers. -->
+    <!-- Note that discovery could take a significant amount of time if the range to be scanned is large. -->
+    <!--	
+	<SubNet>2002:4567:cfd:aef:cdb:abc:ff:e0-2002:4567:cfd:aef:cdb:abc:ff:fe</SubNet>
+        <SubNet>2002:4567:defc:abcd::cebc-2002:4567:defc:abcd::cecf</SubNet>
+        <SubNet>2002:4567::155.35.13.175-2002:4567::155.35.13.190</SubNet>
+        <SubNet>2002:4567::155.35.14.0/126</SubNet>
+        <SubNet>2002:4567:cfd:aef:cdb:abc:ff:e0/126</SubNet>
+        <SubNet>155.35.55.45/255.255.255.248</SubNet>
+        <SubNet>155.35.67.0/27</SubNet>
+        <SubNet>155.35.88.56-155.35.88.80</SubNet>
+    -->
+    
+    <!-- Add your ports here -->
+    <!-- Setting the 'Protocol' attribute implies discovery would occur over HTTPS. Its value sets the protocol over which SSL communication happens. Valid values are SSL and TLS.  -->
+    <!-- Valid values for 'Mode' attribute are Permissive and Non-Permissive.  -->
+    <!-- Example entries -->
+    <!--
+	<Port Number="80" Type="TCP" >
+		<FingerPrintMatcher>Apache</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:IBM_HTTP_SERVER</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:Oracle-HTTP-Server</FingerPrintMatcher>
+		<FingerPrintMatcher>Microsoft-IIS</FingerPrintMatcher>		
+	</Port>
+	<Port Number="81" Type="TCP" >
+		<FingerPrintMatcher>Apache</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:IBM_HTTP_SERVER</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:Oracle-HTTP-Server</FingerPrintMatcher>
+		<FingerPrintMatcher>Microsoft-IIS</FingerPrintMatcher>
+	</Port>
+        <Port Number="443" Type="TCP" Protocol="SSL" Mode="Permissive">
+		<FingerPrintMatcher>Apache</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:IBM_HTTP_SERVER</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:Oracle-HTTP-Server</FingerPrintMatcher>
+		<FingerPrintMatcher>Microsoft-IIS</FingerPrintMatcher>		
+	</Port>
+        <Port Number="445" Type="TCP" Protocol="TLS" Mode="Non-Permissive">
+		<FingerPrintMatcher>Apache</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:IBM_HTTP_SERVER</FingerPrintMatcher>
+		<FingerPrintMatcher>Apache:Oracle-HTTP-Server</FingerPrintMatcher>
+		<FingerPrintMatcher>Microsoft-IIS</FingerPrintMatcher>		
+	</Port>
+    -->
+
+</DiscoveryConfig>
+	
+		

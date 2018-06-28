@@ -1,0 +1,185 @@
+{
+  "id": "DOCKER",
+  "layer": "INFRASTRUCTURE",
+  "version": "10.5.4",
+  "metricSpecifiers": {
+    "DOCKER": [
+      {
+        "metricSpecifier": {
+          "format": "Swarm|<docker_host>|<docker_node>|<docker_name>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "CPU",
+        "metricNames": [
+          "CPU % (rounded)",
+          "CPU Count"
+        ],
+        "filter": {
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "Swarm|<docker_host>|<docker_node>|<docker_name>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Memory",
+        "metricNames": [
+          "Memory % (rounded)",
+          "Memory Limit",
+          "Memory Usage"
+        ],
+        "filter": {
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "Swarm|<docker_host>|<docker_node>|<docker_name>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Network",
+        "metricNames": [
+          "Dropped Packets during Send",
+          "Dropped Packets during Receive",
+          "Errors Sent",
+          "Errors Received"
+        ],
+        "filter": {
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "Docker|<docker_host>|<docker_name>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "CPU",
+        "metricNames": [
+          "CPU % (rounded)",
+          "CPU Count"
+        ],
+        "filter": {
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "Docker|<docker_host>|<docker_name>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Memory",
+        "metricNames": [
+          "Memory % (rounded)",
+          "Memory Limit",
+          "Memory Usage"
+        ],
+        "filter": {
+        }
+      },
+      {
+        "metricSpecifier": {
+          "format": "Docker|<docker_host>|<docker_name>",
+          "type": "EXACT"
+        },
+        "agentSpecifier": {
+          "format": "<agent>",
+          "type": "EXACT"
+        },
+        "section": "Network",
+        "metricNames": [
+          "Dropped Packets during Send",
+          "Dropped Packets during Receive",
+          "Errors Sent",
+          "Errors Received"
+        ],
+        "filter": {
+        }
+      }
+    ]
+  },
+  "alertMappings": {
+    "DOCKER": [
+      "Swarm|<docker_host>|<docker_node>|<docker_name>",
+      "Docker|<docker_host>|<docker_name>"
+    ]
+  },
+  "perspectives": [
+    {
+      "id": "DOCKER_PERSPECTIVE1",
+      "name": "Docker Overview",
+      "layer": "INFRASTRUCTURE",
+      "groupBy": [
+        {
+          "attributeName": "docker_state"
+        },
+        {
+          "attributeName": "docker_host"
+        },
+        {
+          "attributeName": "docker_node"
+        },
+        {
+          "attributeName": "docker_name"
+        },
+        {
+          "attributeName": "endUser"
+        },
+        {
+          "attributeName": "Application"
+        }
+      ]
+    },
+    {
+      "id": "DOCKER_PERSPECTIVE2",
+      "name": "Docker Application",
+      "layer": "INFRASTRUCTURE",
+
+      "groupBy": [
+        {
+          "attributeName": "docker_node"
+        },
+        {
+          "attributeName": "docker_container_application"
+        },
+        {
+          "attributeName": "docker_container_service"
+        },
+        {
+          "attributeName": "docker_name"
+        }
+      ]
+    },
+    {
+      "id": "Host Kubernetes",
+      "name": "Host object, Docker object",
+      "layer": "ATC",
+      "groupBy": [
+        {
+          "attributeName": "_BY_LAYER_OBJECT_ INFRASTRUCTURE.HOST",
+          "prefix": ""
+        },
+        {
+          "attributeName": "_BY_LAYER_OBJECT_ INFRASTRUCTURE.DOCKER",
+          "prefix": ""
+        }
+      ]
+    }
+  ]
+}
