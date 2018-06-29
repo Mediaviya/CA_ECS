@@ -1,2 +1,2 @@
 #!/bin/sh
-/opt/apmia/apmia-ca-installer.sh start && telnet apmem1 5001 && tail -f /opt/apmia/logs/IntroscopeAgent.log;
+/opt/apmia/apmia-ca-installer.sh start && echo "13.0.2.48    apmem1" >> /etc/hosts && tail -f /opt/apmia/logs/IntroscopeAgent.log;
