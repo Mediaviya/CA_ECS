@@ -18,6 +18,7 @@ RUN yum install -y telnet
 #RUN curl -O https://bootstrap.pypa.io/get-pip.py
 #RUN python get-pip.py --user
 #RUN /root/.local/bin/pip install awscli --upgrade --user
+RUN echo "13.0.2.48    apmem1" >> /etc/hosts
 
 #Copy Web App
 ADD apmia2/ /opt/apmia
